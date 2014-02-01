@@ -40,6 +40,13 @@ void convertToLow(int len_parola,char *parola)
     }
 }
 
+void stampa_indice(indice* alfabeto)
+{
+    if(alfabeto->punto_lista==NULL)
+        printf("%c= %p\n", alfabeto->lettera,alfabeto->punto_lista);
+    if (alfabeto->next!=NULL)
+        stampa_indice(alfabeto->next);
+}
 
 //appende la parola alla lista
 //e se lista è del tutto vuota mette in testa la parola data
@@ -298,7 +305,7 @@ int trova_punto(char* string,indice* alfabeto)
 
 // vera funzione che crea presi come argomenti da passare alla chiamata del programma
 // prima il nome del dizionario già creato, poi i nomi di tutti i file da aggiungere
-int final(int argc,const char *argv[])
+int main(int argc, const char *argv[])
 {
     if(argc<2)
     { 
@@ -355,100 +362,3 @@ int final(int argc,const char *argv[])
 }
 
 
-void stampa_indice(indice* alfabeto)
-{
-    if(alfabeto->punto_lista==NULL)
-        printf("%c= %p\n", alfabeto->lettera,alfabeto->punto_lista);
-    if (alfabeto->next!=NULL)
-        stampa_indice(alfabeto->next);
-}
-/*  */
-/* void test2(int argc,const char *argv[]) */
-/* { */
-/*     FILE* f; */
-/*     FILE* dizionario_omnia; */
-/*     int i; */
-/*     char* buffer= calloc(30, sizeof(char)); */
-/*     node* head=calloc(1,sizeof(node)); */
-/*     indice* alfabeto=indicizza(NULL,NULL); */
-/*  */
-/*     head->word=strdup("albero"); */
-/*     head->prev=NULL; */
-/*     dizionario_omnia=fopen(argv[1],"r"); */
-/*     #<{(| alfabeto->punto_lista=head; |)}># */
-/*     printf("ok ho creato l'indice alfabetico\n"); */
-/*  */
-/*     stampa_indice(alfabeto); */
-/*  */
-/*     #<{(| while (!feof(dizionario_omnia)) |)}># */
-/*     #<{(| { |)}># */
-/*     #<{(|  fscanf(dizionario_omnia,"%s",buffer); |)}># */
-/*     #<{(|  #<{(| printf("salvo %s\n",buffer); |)}># |)}># */
-/*     #<{(|  if(controllo_presenza(head,buffer,alfabeto)) head=trova_punto(head,buffer,alfabeto); |)}># */
-/*     #<{(| } |)}># */
-/*     #<{(| printf("ok ho assimilato il dizionario di base\n"); |)}># */
-/*     #<{(| fclose(dizionario_omnia); |)}># */
-/*     #<{(|  |)}># */
-/*     #<{(| alfabeto=indicizza(head,2,alfabeto); |)}># */
-/*      */
-/* } */
-
-
-
-void test1(int argc, const char *argv[])
-{
-    int i;
-    /* printf("%i\n",sopra_o_sotto((char*)argv[1],(char*)argv[2])); */
-    /* printf("%i",argc); */
-    /* printf("%i",sono_uguali((char*)argv[1],(char*)argv[2])); */
-    char* string=calloc(30,sizeof(char));
-    node* head=calloc(1,sizeof(node));
-    head->word=strdup(argv[1]);
-    for (i = 0; i < 5; i++) {
-        scanf("%s",string);
-        /* trova_punto(head,string,alfabeto); */
-    }
-    
-    head=rewind_list(head);
-    stampa_lista(head);
-    while (1)
-    {
-    printf("ok ora dimmi una parola che vuoi controllare nella lista\n");
-    scanf("%s",string);
-    /* if(controllo_presenza(head,string)) */
-        /* printf("non c'è!\n"); */
-    /* else printf("c'è!\n"); */
-    }
-}
-void test_alfabeto(){
-indice* alfabeto=crea_indice_zero();
-    while (alfabeto->next!=NULL)
-    {
-        printf("%c ",alfabeto->lettera);
-        if(alfabeto->next!=NULL)
-            alfabeto=alfabeto->next;
-    }
-    while (alfabeto->prev!=NULL)
-    {
-        printf("%c ",alfabeto->lettera);
-        alfabeto=alfabeto->prev;
-    }
-    if(alfabeto->prev==NULL)
-        printf("%c ",alfabeto->lettera);
-}
-int main(int argc, const char *argv[])
-{
-    /* void test_alfabeto(); */
-/*  */
-/*     int i=0; */
-/*     while(i!=10) */
-/*     { */
-/*      printf("%i ",i); */
-/*      i++; */
-/*     } */
-/*      */
-/*      printf("%i ",i); */
-        /* test1(argc,argv); */
-    /* test2(argc,argv); */
-    final(argc,argv);
-}
