@@ -300,12 +300,18 @@ int trova_punto(char* string,indice* alfabeto)
 // prima il nome del dizionario già creato, poi i nomi di tutti i file da aggiungere
 int final(int argc,const char *argv[])
 {
+    if(argc<2)
+    { 
+        printf("devi passare almeno 2 argomenti alla chiamata,\n il primo sarà il file di base da assimilare, che può anche non esistere,\n\t e su cui poi verrà scritto il nuovo dizionario riordinato, \ntutti gli argomenti successivi saranno i file che verranno assimilati\n");
+        return -1;
+    }
     FILE* f;
     FILE* dizionario_omnia;
     int i;
     char* buffer= calloc(30, sizeof(char));
     indice* alfabeto=crea_indice_zero();
     dizionario_omnia=fopen(argv[1],"r");
+    if(dizionario_omnia!=NULL)
     while (!feof(dizionario_omnia))
     {
         fscanf(dizionario_omnia,"%s",buffer);
