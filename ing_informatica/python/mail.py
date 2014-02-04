@@ -6,15 +6,46 @@ numeroTessera = 150
 parolaChiave = "topo"
 
 
+class dati:
+    nome = None
+    mail = None
+    numeroTessera = None
+    parolaChiave = None
+    pacchetto = []
+    numeroPacchetti = []
+
+    def __init__(self, nome, mail, pacchetto, numeroPacchetti):
+        self.nome = nome
+        self.mail = mail
+        self.pacchetto = pacchetto
+        self.numeroPacchetti = numeroPacchetti
+
+    def stampa(self, nomeFile):
+        file = open(nomeFile, "a+")
+        for key, value in self.__dict__.items:
+            if key == "pacchetto" or key == "numeroPacchetti":
+                pass
+            file.write(value + " \\ ")
+        file.write("\n")
+
+    def chiediDati(self):
+        dati.nome, dati.mail = raw_input("ora inseriscine il nome e la mail \
+separati da spazi\n").split(2)
+        numero_pacchetti_diversi = raw_input("quanti pacchetti diversi ha \
+acquistato il cliente?\n").split(2)
+        for i in range(0, numero_pacchetti_diversi):
+            pacco, nrpacchi = raw_input("ora il pacchetto acquistato e il \
+loro numero sempre divisi da spazi\n").split(2)
+            dati.pacchetto.append(pacco)
+            dati.numeroPacchetti.appen(nrpacchi)
+
+
 def prendiDati(nomeFile):
     file = open(nomeFile, "r")
     primariga = list(file.readline())
     nome = primariga[1]
 
     return nome
-
-
-def scaricaMail()
 
 
 def inviamail(ricevente, nome, numeroTessera, parolaChiave):
