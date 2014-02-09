@@ -31,15 +31,15 @@ class dati:
         file.close()
 
     def chiediDati(self):
-        self.nome, self.mail = raw_input("ora inseriscine il nome e la mail \
+        dati.nome, dati.mail = raw_input("ora inseriscine il nome e la mail \
 separati da spazi\n").split(2)
         numero_pacchetti_diversi = raw_input("quanti pacchetti diversi ha \
 acquistato il cliente?\n").split(2)
         for i in range(0, numero_pacchetti_diversi):
             pacco, nrpacchi = raw_input("ora il pacchetto acquistato e il \
 loro numero sempre divisi da spazi\n").split(2)
-            self.pacchetto.append(pacco)
-            self.numeroPacchetti.append(nrpacchi)
+            dati.pacchetto.append(pacco)
+            dati.numeroPacchetti.append(nrpacchi)
 
 
 def inviamail(ricevente, nome, numeroTessera, parolaChiave):
@@ -110,16 +110,15 @@ prenotazione.
 
 Ti ringraziamo nuovamente per la tua partecipazione e ti auguriamo un =
 buon soggiorno allo Snow Sonic 2014.bit_length
-=20
-=20
+
+
 Rimaniamo a tua disposizione per ogni eventuale chiarimento.
-=20
-=20
-=20
+
+
 Snow Sonic staff
-=20
-=20
-=20
+
+
+
 Info
 mail@forwardmotion.It
 www.facebook.com/snowsonicfestival
