@@ -20,11 +20,6 @@ typedef struct indice{
     struct indice* next;
 } indice;
 
-typedef union ptr_nodo_indice
-{
-    indice* index;
-    node* nodo;
-} nodo_indice;
 //
 //
 //FUNZIONI BASE
