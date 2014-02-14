@@ -33,13 +33,12 @@ char* is_operators(char*s)
                 return s+i;
             }
         }
-    
     return NULL;
 }
 
 int eval(char* expr)
 {
-    int prev=0,i, cifra=0,len;
+    int prev=0,i=0, cifra=0,len;
     char*c =NULL;
     char* temp=calloc(100,sizeof(char));
     char* temp_due=calloc(100,sizeof(char));
@@ -49,8 +48,12 @@ int eval(char* expr)
     {
         i=0;
         prev=0;
+        temp=calloc(100,sizeof(char));
+        temp_due=calloc(100,sizeof(char));
+        c++;
         while (IS_NUM(c[i]) || IS_MULTDIV(c[i]))
             i++;
+        printf("%s\n",c);
         strncat(temp,c,i);
         printf("temp=%s\n",temp);
         prev=eval(temp);
@@ -102,6 +105,6 @@ int eval(char* expr)
 }
 int main(int argc, char** argv)
 {
-    printf("%i\n", eval("2/2+10+90"));
+    printf("%i\n", eval("2/2+10/10+90"));
 }
 
