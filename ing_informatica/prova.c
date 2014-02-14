@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-
+#include <stdlib.h>
+#define MIN(a,b) (a<b ? a : b)
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
  
 int levenshtein(char *s1, char *s2) {
@@ -31,8 +32,10 @@ int levenshtein(char *s1, char *s2) {
 
 int main(int argc, const char *argv[])
 {
-    char* parola1=strdup("cane");
-    char* parola2=strdup("casa");
-    printf("distanza tra %s e %s = %i",parola1,parola2,levenshtein(parola1,parola2));
+    /* char* parola1=strdup("cane"); */
+    /* char* parola2=strdup("casa"); */
+    /* printf("distanza tra %s e %s = %i",parola1,parola2,levenshtein(parola1,parola2)); */
+    int a=atoi(argv[1]),b=atoi(argv[2]);
+    printf("il minimo tra %i e %i è %i",a,b,MIN(a,b));
     return 0;
 }
