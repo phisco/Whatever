@@ -55,7 +55,7 @@ int eval(char* expr)
             i++;
         i--;
         printf("%s\n",c);
-        strncat(temp,c,i);
+        strncat(temp,c+1,i);
         printf("temp=%s\n",temp);
         prev=eval(temp);
         printf("prev=%i\n",prev);
