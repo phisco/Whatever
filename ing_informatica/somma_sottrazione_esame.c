@@ -60,7 +60,7 @@ int eval(char* expr)
         prev=eval(temp);
         printf("prev=%i\n",prev);
         sprintf(temp_due,"%i",prev);
-        strncat(totale,expr,c+1-expr); 
+        strncat(totale,expr,c-expr); 
         strcat(totale,temp_due);
         strcat(totale,c+i);
         expr=totale;
