@@ -43,23 +43,24 @@ int eval(char* expr)
     char* temp=calloc(100,sizeof(char));
     char* temp_due=calloc(100,sizeof(char));
     char* totale=calloc(100,sizeof(char));
-    temp[0]='\0';
     while(c=is_operators(expr),c!=NULL)
     {
         i=0;
         prev=0;
         temp=calloc(100,sizeof(char));
+        temp[0]='\0';
         temp_due=calloc(100,sizeof(char));
-        c++;
+        temp_due[0]='\0';
         while (IS_NUM(c[i]) || IS_MULTDIV(c[i]))
             i++;
+        i--;
         printf("%s\n",c);
         strncat(temp,c,i);
         printf("temp=%s\n",temp);
         prev=eval(temp);
         printf("prev=%i\n",prev);
         sprintf(temp_due,"%i",prev);
-        strncat(totale,expr,c-expr); 
+        strncat(totale,expr,c+1-expr); 
         strcat(totale,temp_due);
         strcat(totale,c+i);
         expr=totale;
