@@ -26,11 +26,11 @@ char* is_operators(char*s)
                 i--;
                 while(IS_NUM(s[i]))
                 {
-                    if(s!=s+i)
+                    if(i!=0)
                         i--;
-                    else break;
+                    else return s;
                 }
-                return s+i;
+                return s+i+1;
             }
         }
     return NULL;
@@ -53,13 +53,13 @@ int eval(char* expr)
         temp_due[0]='\0';
         while (IS_NUM(c[i]) || IS_MULTDIV(c[i]))
             i++;
-        i--;
         printf("%s\n",c);
-        strncat(temp,c+1,i);
+        strncat(temp,c,i);
         printf("temp=%s\n",temp);
         prev=eval(temp);
         printf("prev=%i\n",prev);
         sprintf(temp_due,"%i",prev);
+        printf("ciao\n");
         strncat(totale,expr,c-expr); 
         strcat(totale,temp_due);
         strcat(totale,c+i);
