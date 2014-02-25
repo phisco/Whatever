@@ -42,10 +42,11 @@ set background=dark
 set hidden "FA APRIRE PIù BUFFER SENZA CHIUDERE PRECEDENTE
 
 let mapleader=","
+set colorcolumn=81
 
 set noswapfile
-set nowb
-set nobackup
+" set nowb
+" set nobackup
 set expandtab
 set nowrap        " don't wrap lines
 set tabstop=4    " a tab is four spaces
@@ -75,11 +76,10 @@ filetype plugin indent on
 "set listchars+=tab:┊\  
 autocmd filetype html,xml set listchars-=tab:>.
 set pastetoggle=<C-V>
-set mouse=a
+" set mouse=a
 set wildmode=list:longest,full
 set wildmenu
 set showmatch
-
 let hlstate=0
 nnoremap <F4> :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
 
