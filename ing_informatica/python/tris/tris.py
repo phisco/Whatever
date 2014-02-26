@@ -36,7 +36,7 @@ class field:
         self.visualizza()
         self.check()
         if self.vittoria!=0:
-            print ("vittoria per il giocatore "+str(self.vittoria))
+            print ("vittoria per il giocatore "+str(self.vittoria[0]))
         self.turno[0]=self.turno[0]%2+1
         self.turno[1]+=1
 
@@ -58,17 +58,21 @@ class field:
 
     def check(self):
         move_to_control=self.p[self.turno[0]]
+        print( move_to_control)
         counter={"diagonal":[0,0],"col":[0,0,0],"row":[0,0,0]}
+        print( counter)
         for x in range(3):
             if self.field[x,x] is move_to_control:
                 counter["diagonal"][0]+=1
             if self.field[2-x,x] is move_to_control:
                 counter["diagonal"][1]+=1
             for y in range(3):
+                print("row " ,str( x) ,self.field[x,y])
+                print("col " ,str( y) ,self.field[x,y])
                 if self.field[y,x] is move_to_control:
-                    counter["col"][y-1]+=1
+                    counter["col"][x]+=1
                 if self.field[x,y] is move_to_control:
-                    counter["row"][x-1]+=1
+                    counter["row"][x]+=1
         for val in counter.values():
             print(val)
             for i in val:
