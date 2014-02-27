@@ -130,10 +130,9 @@ let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 " Settings for jedi-vim
 let g:jedi#completions_command = "<C-N>"
-" let g:jedi#usages_command = "<leader>z"
-" let g:jedi#related_names_command = <leader>z
-" let g:jedi#popup_on_dot = 1
-" let g:jedi#popup_select_first = 0
+let g:jedi#usages_command = "<leader>z"
+let g:jedi#popup_on_dot = 1
+let g:jedi#popup_select_first = 0
 map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
 "tab complete
 function! InsertTabWrapper(direction)
@@ -158,9 +157,9 @@ set nofoldenable
 let $PYTHONHOME='/System/Library/Frameworks/Python.framework/Versions/Current'
 " let g:pymode_rope_lookup_project = 0
 " let g:pymode_rope_autoimport = 0
-let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
-let g:PyFlakeOnWrite = 1
-let g:PyFlakeDefaultComplexity=10
+" let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
+" let g:PyFlakeOnWrite = 1
+" let g:PyFlakeDefaultComplexity=10
 autocmd filetype py set foldmethod=indent
 autocmd BufWritePost *.py call Flake8()
-let g:PyFlakeAggressive = 2
+" let g:PyFlakeAggressive = 2
