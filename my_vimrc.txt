@@ -10,25 +10,26 @@ call pathogen#incubate()
 "PLUGINS I USE
 "
 " YankRing.vim
-" │checksyntax_vim
-" │indentLine
-" │nerdcommenter
-" │nerdtree
-" │numbers
-" │powerline
-" │python-mode
-" │supertab
-" │syntastic
-" │tcomment_vim
-" │tlib_vim
-" │vim-addon-mw-utils
-" │vim-colors-solarized
-" │vim-powerline
-" │vim-repeat
-" │vim-sensible
-" │vim-snipmate
-" │vim-surround"
-" 
+" checksyntax_vim
+" indentLine
+" jedi-vim
+" nerdcommenter
+" nerdtree
+" numbers
+" powerline
+" supertab
+" syntastic
+" tcomment_vim
+" tlib_vim
+" vim-addon-mw-utils
+" vim-colors-solarized
+" vim-powerline
+" vim-repeat
+" vim-sensible
+" vim-snipmate
+" vim-surround
+"
+inoremap jj <ESC>
 "SOLARIZE THEME
 let g:solarized_termcolors=256
 
@@ -42,18 +43,20 @@ set hidden "FA APRIRE PIù BUFFER SENZA CHIUDERE PRECEDENTE
 
 let mapleader=","
 set colorcolumn=81
-
+highlight ColorColumn ctermbg=233
 set noswapfile
 " set nowb
 " set nobackup
-set expandtab
+" set expandtab
+set tw=79 " width of document (used by gd)"
+set fo-=t " don't automatically wrap text when typing"
 set nowrap        " don't wrap lines
-set tabstop=4    " a tab is four spaces
+" set tabstop=4    " a tab is four spaces
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set autoindent    " always set autoindenting on
 set copyindent    " copy the previous indentation on autoindenting
 set number        " always show line numbers
-set shiftwidth=4  " number of spaces to use for autoindenting
+" set shiftwidth=4  " number of spaces to use for autoindenting
 set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
 set showmatch     " set show matching parenthesis
 set ignorecase    " ignore case when searching
@@ -73,7 +76,7 @@ filetype plugin indent on
 "set listchars=tab:....,trail:.,extends:#,nbsp:.
 " set list lcs=tab:\|\
 "set listchars+=tab:┊\  
-autocmd filetype html,xml set listchars-=tab:>.
+" autocmd filetype html,xml set listchars-=tab:>.
 set pastetoggle=<C-V>
 " set mouse=a
 set wildmode=list:longest,full
@@ -82,13 +85,82 @@ set showmatch
 let hlstate=0
 nnoremap <F4> :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
 
+nnoremap Q <nop>
+"
+"IMPORTED FROM
+"https://github.com/mbrochh/vim-as-a-python-ide/blob/master/.vimrc
+"
+"
+" Real programmers don't use TABs but spaces
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround
+set expandtab
+
+" easier moving of code blocks
+" Try to go into visual mode (v), thenselect several lines of code here and
+" then press ``>`` several times.
+vnoremap < <gv " better indentation
+vnoremap > >gv " better indentation
+
+
+
+" Quicksave command
+noremap <C-Z> :update<CR>
+vnoremap <C-Z> <C-C>:update<CR>
+inoremap <C-Z> <C-O>:update<CR>
+"
+"Automatic reloading of .vimrc
+autocmd! bufwritepost .vimrc source %"
+
+" map sort function to a key
+vnoremap <Leader>s :sort<CR>
+
+" Settings for vim-powerline
+set laststatus=2
+" Settings for ctrlp
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+" Settings for supertab
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+
+" Settings for jedi-vim
+let g:jedi#completions_command = "<C-N>"
+" let g:jedi#usages_command = "<leader>z"
+" let g:jedi#related_names_command = <leader>z
+" let g:jedi#popup_on_dot = 1
+" let g:jedi#popup_select_first = 0
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+"tab complete
+function! InsertTabWrapper(direction)
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    elseif "backward" == a:direction
+        return "\<c-p>"
+    else
+        return "\<c-n>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
+inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
+
+set nofoldenable
 "
 "
 "PYTHON
 "
 "
 let $PYTHONHOME='/System/Library/Frameworks/Python.framework/Versions/Current'
-let g:pymode_rope_lookup_project = 0
-let g:pymode_rope_autoimport = 0
+" let g:pymode_rope_lookup_project = 0
+" let g:pymode_rope_autoimport = 0
+let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
+let g:PyFlakeOnWrite = 1
+let g:PyFlakeDefaultComplexity=10
 autocmd filetype py set foldmethod=indent
-
+autocmd BufWritePost *.py call Flake8()
+let g:PyFlakeAggressive = 2
