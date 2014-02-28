@@ -35,7 +35,7 @@ let g:solarized_termcolors=256
 
 syntax enable
 set background=dark
-
+" set clipboard=unnamed
 
 "MODIFICHE SCRITTURA E SISTEMA
 
@@ -43,7 +43,6 @@ set hidden "FA APRIRE PIù BUFFER SENZA CHIUDERE PRECEDENTE
 
 let mapleader=","
 set colorcolumn=81
-highlight ColorColumn ctermbg=233
 set noswapfile
 " set nowb
 " set nobackup
@@ -161,5 +160,5 @@ let $PYTHONHOME='/System/Library/Frameworks/Python.framework/Versions/Current'
 " let g:PyFlakeOnWrite = 1
 " let g:PyFlakeDefaultComplexity=10
 autocmd filetype py set foldmethod=indent
-autocmd BufWritePost *.py call Flake8()
+" autocmd BufWritePost *.py call Flake8()
 " let g:PyFlakeAggressive = 2
