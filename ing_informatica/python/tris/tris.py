@@ -5,16 +5,17 @@ import itertools
 
 class End(Exception):
 
-    def __init__(self, why=" ", winner=0):
+    def __init__(self, why=0):
         self.why = why
-        self.winner = winner
 
-    def __setitem__(self, why=" ", winner="0"):
-        self.why = why
-        self.winner = winner
+    def __getitem__(self, *obj):
+            return self.why
+
+    def clear(self):
+        self.why = 0
 
 
-class Error(Exception):
+class Error(UserWarning):
 
     def __init__(self, espressione, messaggio):
         self.expr = espressione
@@ -27,18 +28,20 @@ class Error(Exception):
 class partita(object):
 
     def __init__(self, p1="X", p2="O"):
-        self.field = field(p1, p2)
-        self.player1 = human(player=1, symbol=p1)
-        self.player2 = human(player=2, symbol=p2)
-        self.p = {1: self.player1, 2: self.player2}
+        self.field = field()
+        player1 = human(player=1, symbol=p1, field=self.field)
+        player2 = human(player=2, symbol=p2, field=self.field)
+        self.p = {1: player1, 2: player2}
         self.turno = [1, 0]
         self.End = End()
         self.History = []
 
     def __main__(self):
-        partita = True
-        while partita is not False:
-            partita = self.__turno()
+        while self.__turno() is True:
+            pass
+        else:
+            self.__save_history()
+            return
 
     def __cambia_turno(self):
         self.turno[0] = self.turno[0] % 2 + 1
@@ -46,12 +49,13 @@ class partita(object):
         if self.turno[1] is 8:
             raise End("end_of_game", "partita finita")
 
-    def __gioca(self, x, y):
-        self.field[(x, y)] = self.p[self.turno[0]]
-        self.History[self.turno[1]] = (x, y)
+    def __gioca(self, coord):
+        self.field[coord] = self.p[self.turno[0]].symbol
 
-    def __check(self, player):
-        move_to_control = player.symbol
+    def __check(self, player=0):
+        if player is 0:
+            player = self.turno[0]
+        move_to_control = self.p[player].symbol
         counter = {"diag": [0, 0], "col": [0, 0, 0], "row": [0, 0, 0]}
         for key, val in self.field:
             if val is move_to_control:
@@ -60,12 +64,22 @@ class partita(object):
                 counter["row"][x] += 1
                 if x == y:
                     counter["diag"][0] += 1
-                if y == x - 3:
+                if x == -1 * y + 2:
                     counter["diag"][1] += 1
-        for val in counter.values():
-            for i in val:
-                if i is 3 and self.End.winner is 0:
-                    raise End["win", player]
+        print(counter)
+        for val in itertools.chain.from_iterable(counter.values()):
+            if val is 3 and self.End.why is 0:
+                    self.End.why = player
+                    print("""
+ __   __  _______  __   __    _     _  _______  __    _  __   __
+|  | |  ||       ||  | |  |  | | _ | ||       ||  |  | ||  | |  |
+|  |_|  ||   _   ||  | |  |  | || || ||   _   ||   |_| ||  | |  |
+|       ||  | |  ||  |_|  |  |       ||  | |  ||       ||  | |  |
+|_     _||  |_|  ||       |  |       ||  |_|  ||  _    ||__| |__|
+  |   |  |       ||       |  |   _   ||       || | |   | __   __
+  |___|  |_______||_______|  |__| |__||_______||_|  |__||__| |__|
+                    """)
+                    raise End
 
     def __turno(self):
         self.field.visualizza()
@@ -73,22 +87,33 @@ class partita(object):
         player.ask_move()
         self.__gioca(player.move)
         try:
-            self.__check(player.ask)
+            self.__check()
             self.__cambia_turno()
         except End:
+            self.field.visualizza()
             self.__store_history()
-            if player.__ask_to_play():
+            if self.p[self.turno[0]].ask_to_play():
                 self.__reset_game()
             else:
                 return False
         return True
 
     def __store_history(self):
-        self.History.append((self.End[:], self.history[:]))
+        def zip_alternated(it1, it2):
+            for el1, el2 in itertools.izip_longest(it1, it2):
+                yield el1
+                yield el2
+        self.History.append((self.End.why,
+                            [move for move in
+                             zip_alternated(self.p[1].history,
+                                            self.p[2].history)]))
+
+    def __save_history(self):
+        print (self.History)
 
     def __reset_game(self):
-        self.field = field()
-        self.End = End()
+        self.field.reinit()
+        self.End.clear()
         self.turno = [1, 0]
 
 
@@ -98,33 +123,31 @@ class AI(object):
 
 class human(object):
 
-    def __init__(self, player=1, symbol="X"):
+    def __init__(self, player=1, symbol="X", field=None):
+        self.field = field
         self.player = player
         self.symbol = symbol
         self.move = ()
-        self.History = []
+        self.history = []
 
-    def __ask_to_play(self):
-        return raw_input("Do you want to play again? Yes/No").startswith("y")
+    def ask_to_play(self):
+        return raw_input("Do you want to play again? "
+                         "Yes/No\n").lower().startswith("y")
 
     def ask_move(self):
         try:
-            x, y = raw_input("Where do you want play? (x,y) \n").split(",")
-            print(x, y, max(x, y) > 3, min(x, y) < 0, max(x, y) > 3 or min(x, y) < 1)
-            if max(x, y) > 3 or min(x, y) < 1:
-                print("occhio 1")
+            x, y = (int(x)-1 for x in raw_input("Where do you want play? "
+                                                "(x,y) \n").split(","))
+            if max(x, y) > 2 or min(x, y) < 0:
                 raise Error("Out_of_field", "coordinate non esistenti")
             elif self.field[(x, y)] is not " ":
-                print("occhio")
                 raise Error("Coord_used", "coordinate gia' usate")
             else:
                 self.move = (x, y)
                 self.history.append(self.move)
         except ValueError:
-            print(
-                "Remember to write only the two coordinates, \
-                        separated by a comma.\n\
-                    Like that: x,y")
+            print("Remember to write only the two coordinates, "
+                  "separated by a comma.\nLike that: x,y")
             self.ask_move()
         except Error:
             print("The coordinates you have passed are wrong")
@@ -133,16 +156,20 @@ class human(object):
 
 class field(object):
 
-    def __init__(self, p1="X", p2="O"):
-        self.field = {}
+    def __init__(self):
         # self.coord = [(x, y) for x in xrange(3) for y in xrange(3)]
+        self.field = {}
         self.coord = list(itertools.product(xrange(3), repeat=2))
-        for coord in self.coord:
-            self.field[coord] = " "
+        self.field.update(dict.fromkeys(self.coord, " "))
+        # for coord in self.coord:
+            # self.field[coord] = " "
+
+    def _reinit(self):
+        self.field.update(dict.fromkeys(self.coord, " "))
 
     def __iter__(self):
         for coord in self.coord:
-            yield self.field[coord]
+            yield (coord, self.field[coord])
 
     def __getitem__(self, key):
             return self.field[key]
@@ -151,11 +178,19 @@ class field(object):
         self.field[key] = val
 
     def visualizza(self):
-        for y in range(len(self.coord)/3):
-            print("  ------------- ")
-            for x in range(len(self.coord)/3):
-                print(self.field[(x, y)], end=" || ")
+        for x in range(len(self.coord)/3):
+            print(" ----------------- ")
+            print(" |", end="")
+            for y in range(len(self.coord)/3):
+                print("| ", end="")
+                print(self.field[(x, y)], end="")
+                print(" |", end="")
             else:
-                print("")
+                print("|")
         else:
-            print("  ------------- ")
+            print(" ----------------- ")
+
+
+if __name__ == "__main__":
+    game = partita()
+    game.__main__()
