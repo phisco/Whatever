@@ -3,6 +3,7 @@ set nocompatible
 
 "MANDA PATHOGEN
 
+
 execute pathogen#infect()
 call pathogen#helptags()
 call pathogen#incubate()
