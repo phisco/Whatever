@@ -7,7 +7,7 @@ module_path=($module_path /usr/local/lib/zpython)
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
-bindkey -v
+# bindkey -v
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
 # Example aliases
@@ -44,7 +44,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
-plugins=(git zsh-syntax-highlighting)
+plugins=(git zsh-syntax-highlighting vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 alias gs='git status '
