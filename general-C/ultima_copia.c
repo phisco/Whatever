@@ -43,10 +43,10 @@ int eval(char* expr)
                 printf("prev=%i\n",prev);c-=2;if(prev<0)*c=45-1**c%43;
         sprintf(temp_due,"%i",abs(prev));
                 printf("temp_due=%s\n",temp_due);
-        strncat(totale,expr,c-expr+1);
+        strncat(totale,expr,c-expr-1);
                 printf("totale=%s\n",totale);
         strcat(totale,temp_due);
-        strcat(totale,c+i+3);
+        strcat(totale,c+i+1);
                         printf("totale=%s\n",totale);
         expr=strdup(totale);
         printf("expr=%s\n",expr);
@@ -85,9 +85,3 @@ int eval(char* expr)
     return prev;
 
 }
-
-
-int main(int argc,char** argv){
-    printf("%s=%i\n",argv[1],eval(argv[1]));
-}
-
