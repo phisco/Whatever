@@ -1,12 +1,12 @@
-  
 set nocompatible
 
 "MANDA PATHOGEN
-
+""
 
 execute pathogen#infect()
 call pathogen#helptags()
 call pathogen#incubate()
+
 "
 "PLUGINS I USE
 "
@@ -27,27 +27,26 @@ call pathogen#incubate()
 " vim-powerline
 " vim-repeat
 " vim-sensible
-" vim-snipmate
+"vim-snipmate
 " vim-surround
 "
-inoremap jj <ESC>
 "SOLARIZE THEME
-let g:solarized_termcolors=256
-
+if $TERM == "xterm-256color"
+      set t_Co=256
+  endif
 syntax enable
 set background=dark
+hi Search guifg=#ffffff guibg=#0000ff gui=none ctermfg=white ctermbg=darkblue
+hi IncSearch guifg=#ffffff guibg=#8888ff gui=none ctermfg=white
 " set clipboard=unnamed
 
 "MODIFICHE SCRITTURA E SISTEMA
-
 set hidden "FA APRIRE PIù BUFFER SENZA CHIUDERE PRECEDENTE
-
-let mapleader=","
 set colorcolumn=81
 set noswapfile
 " set nowb
 " set nobackup
-" set expandtab
+set expandtab
 set tw=79 " width of document (used by gd)"
 set fo-=t " don't automatically wrap text when typing"
 set nowrap        " don't wrap lines
@@ -72,20 +71,22 @@ set title                " change the terminal's title
 set visualbell           " don't beep
 set noerrorbells         " don't beep
 filetype plugin indent on
-" set list
-"set listchars=tab:....,trail:.,extends:#,nbsp:.
-" set list lcs=tab:\|\
-"set listchars+=tab:┊\  
-" autocmd filetype html,xml set listchars-=tab:>.
 set pastetoggle=<C-V>
 " set mouse=a
 set wildmode=list:longest,full
 set wildmenu
 set showmatch
 let hlstate=0
+""
+"" REMAP
+""
 nnoremap <F4> :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
-
 nnoremap Q <nop>
+let mapleader=","
+inoremap jk <ESC>
+map <leader>w :w<return>
+map <leader>q :q<return>
+
 "
 "IMPORTED FROM
 "https://github.com/mbrochh/vim-as-a-python-ide/blob/master/.vimrc
@@ -126,7 +127,7 @@ set wildignore+=*_build/*
 set wildignore+=*/coverage/*
 
 " Settings for supertab
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+""let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
 " Settings for jedi-vim
 let g:jedi#completions_command = "<C-N>"
@@ -154,12 +155,15 @@ set nofoldenable
 "PYTHON
 "
 "
-let $PYTHONHOME='/System/Library/Frameworks/Python.framework/Versions/Current'
+"let $PYTHONHOME='/System/Library/Frameworks/Python.framework/Versions/Current'
 " let g:pymode_rope_lookup_project = 0
 " let g:pymode_rope_autoimport = 0
-" let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
-" let g:PyFlakeOnWrite = 1
+let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
+let g:PyFlakeOnWrite = 1
+let g:flake8_builtins="_,apply"
+let g:flake8_max_line_length=120
+
 " let g:PyFlakeDefaultComplexity=10
 autocmd filetype py set foldmethod=indent
-" autocmd BufWritePost *.py call Flake8()
+autocmd BufWritePost *.py call Flake8()
 " let g:PyFlakeAggressive = 2
