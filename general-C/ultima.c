@@ -30,24 +30,23 @@ int eval(char* expr)
         temp[0]='\0';
         temp_due[0]='\0';
         totale[0]='\0';
-        for (i=1;expr[i]!='\0';i++)
+        for (i=0;expr[i]!='\0';i++)
         {
             if(c[i]==')' )
             {
-                printf("i )=%i\n",i);
                 break;
             }
         }
         strncat(temp,c,i);
-        printf("c=%c temp=%s\n",*c,temp);
+        printf("temp=%s\n",temp);
         prev=eval(temp);
-                printf("prev=%i\n",prev);if(prev<0&&c[-2]=='-'){*(c-2)='+';};
+                printf("prev=%i\n",prev);c-=2;if(prev<0)*c=45-1**c%43;
         sprintf(temp_due,"%i",abs(prev));
                 printf("temp_due=%s\n",temp_due);
-        strncat(totale,expr,c-expr-1);
-        printf("totale=%s\n",totale);
+        strncat(totale,expr,c-expr+1);
+                printf("totale=%s\n",totale);
         strcat(totale,temp_due);
-        strcat(totale,c+i+1);
+        strcat(totale,c+i+3);
                         printf("totale=%s\n",totale);
         expr=strdup(totale);
         printf("expr=%s\n",expr);
@@ -58,32 +57,35 @@ int eval(char* expr)
     {
         cifra=0;
         len=1;
+
         while(IS_NUM(expr[i]))
         {
             cifra=cifra*10+GETNUM(expr[i]);
             i++;
             len++;
         }  
-        
+                if (IS_NUM(expr[i]))
+                    i++;
         switch (expr[i-len])
         {
             case '+':
-                prev+=cifra;
-                break;
+            	prev+=cifra;
+            	break;
             case '-':
             if(expr[i-len+1]=='-')
                 prev+=cifra;
             else
-                prev-=cifra;
-                break;
+            	prev-=cifra;
+            	break;
             default:
-                prev=cifra;
-                break;
+            	prev=cifra;
+            	break;
         }
     }
     return prev;
 
 }
+
 
 int main(int argc,char** argv){
     printf("%s=%i\n",argv[1],eval(argv[1]));
