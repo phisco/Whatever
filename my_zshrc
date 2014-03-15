@@ -1,11 +1,11 @@
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-module_path=($module_path /usr/local/lib/zpython)
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
+if [ "$TMUX" = "" ]; then tmux ; fi
 
 # bindkey -v
 bindkey -M viins 'jk' vi-cmd-mode
@@ -44,8 +44,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 
-plugins=(git zsh-syntax-highlighting vi-mode)
-
+plugins=(git zsh-syntax-highlighting vi-mode tmux)
 source $ZSH/oh-my-zsh.sh
 alias gs='git status '
 alias ga='git add '
@@ -59,12 +58,13 @@ alias gx='gitx --all'
 alias got='git '
 alias get='git '
 
+alias supup='sudo apt-get update && sudo apt-get upgrade'
+
 
  #Customize to your needs...
 
 export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-export PATH=$PATH:/Users/phil/Desktop/development/adt-bundle-mac-x86_64-20130717/sdk/platform-tools
 ###begin-jump-bash_profile
 #
 # Installation:
@@ -82,5 +82,3 @@ function jump {
 alias j="jump -a"
 
 ###end-jump-bash_profile
-
-module_path=(/usr/lib/zsh/5.0.2 /usr/local/lib/zpython)
