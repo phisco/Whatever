@@ -19,6 +19,7 @@ def watch_file_mods(file=sys.argv[1]):
                         print(file_history[-1][0])
             except IOError:
                 pass
+            time.sleep(1)
     except KeyboardInterrupt:
         return file_history
 
