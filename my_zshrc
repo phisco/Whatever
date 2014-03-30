@@ -54,7 +54,7 @@ alias gd='git diff'
 alias go='git checkout '
 alias gk='gitk --all&'
 alias gx='gitx --all'
-
+alias gll='git pull'
 alias got='git '
 alias get='git '
 
