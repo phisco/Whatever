@@ -26,7 +26,6 @@ if __name__ == "__main__":
     file_history = watch_file_mods(sys.argv[1])
     y = [len(y[0]) for y in file_history]
     x = [int(x[1]) for x in file_history]
-    print(zip(x, y))
     plt.plot(x, y, "o")
     plt.plot(x, y)
     plt.show()
