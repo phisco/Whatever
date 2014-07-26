@@ -165,7 +165,7 @@ let g:flake8_max_line_length=120
 
 " let g:PyFlakeDefaultComplexity=10
 autocmd filetype py set foldmethod=indent
-autocmd BufWritePost *.py call Flake8()
+" autocmd BufWritePost *.py call Flake8()
 " let g:PyFlakeAggressive = 2
 
 " Fugitive {
