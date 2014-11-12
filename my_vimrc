@@ -86,7 +86,7 @@ let mapleader=","
 inoremap jk <ESC>
 map <leader>w :w<return>
 map <leader>q :q<return>
-
+map <leader>W :w !sudo tee %<return>
 "
 "IMPORTED FROM
 "https://github.com/mbrochh/vim-as-a-python-ide/blob/master/.vimrc
@@ -182,4 +182,8 @@ autocmd filetype py set foldmethod=indent
         nnoremap <silent> <leader>gi :Git add -p %<CR>
         nnoremap <silent> <leader>gg :SignifyToggle<CR>
     "}
+
+"javascript
+"
+let javascript_enable_domhtmlcss=1
 
