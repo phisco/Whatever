@@ -9,7 +9,7 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
-if [ "$TMUX" = "" ]; then tmux a ; fi
+# if [ "$TMUX" = "" ]; then tmux a ; fi
 # bindkey -v
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
@@ -88,3 +88,8 @@ function jump {
 alias j="jump -a"
 
 ###end-jump-bash_profile
+
+PERL_MB_OPT="--install_base \"/Users/phil/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/phil/perl5"; export PERL_MM_OPT;
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

@@ -1,0 +1,183 @@
+set nocompatible
+
+"MANDA PATHOGEN
+""
+
+execute pathogen#infect()
+call pathogen#helptags()
+call pathogen#incubate()
+
+"
+"PLUGINS I USE
+"
+" YankRing.vim
+" checksyntax_vim
+" indentLine
+" jedi-vim
+" nerdcommenter
+" nerdtree
+" numbers
+" powerline
+" supertab
+" syntastic
+" tcomment_vim
+" tlib_vim
+" vim-addon-mw-utils
+" vim-colors-solarized
+" vim-powerline
+" vim-repeat
+" vim-sensible
+"vim-snipmate
+" vim-surround
+"
+"SOLARIZE THEME
+if $TERM == "xterm-256color"
+      set t_Co=256
+  endif
+set background=dark
+hi Search guifg=#ffffff guibg=#0000ff gui=none ctermfg=white ctermbg=darkblue
+hi IncSearch guifg=#ffffff guibg=#8888ff gui=none ctermfg=white
+set clipboard=unnamed
+
+syntax enable
+
+"MODIFICHE SCRITTURA E SISTEMA
+" set mouse=a
+set nobackup
+" set nowb
+filetype plugin indent on
+let hlstate=0
+set autoindent    " always set autoindenting on
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+set colorcolumn=81
+set copyindent    " copy the previous indentation on autoindenting
+set expandtab
+set fo-=t " don't automatically wrap text when typing"
+set hidden "FA APRIRE PIù BUFFER SENZA CHIUDERE PRECEDENTE
+set history=1000         " remember more commands and search history
+set hlsearch      " highlight search terms
+set ignorecase    " ignore case when searching
+set incsearch     " show search matches as you type
+set noerrorbells         " don't beep
+set noswapfile
+set nowrap        " don't wrap lines
+set number        " always show line numbers
+set pastetoggle=<C-V>
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+set showmatch
+set showmatch     " set show matching parenthesis
+set smartcase     " ignore case if search pattern is all lowercase,
+set smarttab      " insert tabs on the start of a line according to
+set title                " change the terminal's title
+set tw=79 " width of document (used by gd)"
+set undolevels=1000      " use many muchos levels of undo
+set visualbell           " don't beep
+set wildmenu
+set wildmode=list:longest,full
+""
+"" REMAP
+""
+nnoremap <F4> :if (hlstate == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=1-hlstate<cr>
+nnoremap Q <nop>
+let mapleader=","
+inoremap jk <ESC>
+map <leader>w :w<return>
+map <leader>q :q<return>
+map <leader>Q :q!<return>
+map <leader>W :w !sudo tee %<return>
+"
+"IMPORTED FROM
+"https://github.com/mbrochh/vim-as-a-python-ide/blob/master/.vimrc
+"
+"
+" Real programmers don't use TABs but spaces
+set expandtab
+set shiftround
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+
+" easier moving of code blocks
+" Try to go into visual mode (v), thenselect several lines of code here and
+" then press ``>`` several times.
+vnoremap < <gv " better indentation
+vnoremap > >gv " better indentation
+
+
+
+"Automatic reloading of .vimrc
+autocmd! bufwritepost .vimrc source %"
+
+" map sort function to a key
+vnoremap <Leader>s :sort<CR>
+
+" Settings for vim-powerline
+set laststatus=2
+" Settings for ctrlp
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=*/coverage/*
+
+" Settings for supertab
+""let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+
+" Settings for jedi-vim
+let g:jedi#completions_command = "<C-N>"
+let g:jedi#usages_command = "<leader>z"
+let g:jedi#popup_on_dot = 1
+let g:jedi#popup_select_first = 0
+map <Leader>b Oimport ipdb; ipdb.set_trace() # BREAKPOINT<C-c>
+"tab complete
+" function! InsertTabWrapper(direction)
+    " let col = col('.') - 1
+    " if !col || getline('.')[col - 1] !~ '\k'
+        " return "\<tab>"
+    " elseif "backward" == a:direction
+        " return "\<c-p>"
+    " else
+        " return "\<c-n>"
+    " endif
+" endfunction
+" inoremap <tab> <c-r>=InsertTabWrapper ("forward")<cr>
+" inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<cr>
+
+set nofoldenable
+"
+"
+"PYTHON
+"
+"
+"let $PYTHONHOME='/System/Library/Frameworks/Python.framework/Versions/Current'
+" let g:pymode_rope_lookup_project = 0
+" let g:pymode_rope_autoimport = 0
+let g:PyFlakeCheckers = 'pep8,mccabe,pyflakes'
+let g:PyFlakeOnWrite = 1
+let g:flake8_builtins="_,apply"
+let g:flake8_max_line_length=120
+
+" let g:PyFlakeDefaultComplexity=10
+autocmd filetype py set foldmethod=indent
+" autocmd BufWritePost *.py call Flake8()
+" let g:PyFlakeAggressive = 2
+
+" Fugitive {
+        nnoremap <silent> <leader>gs :Gstatus<CR>
+        nnoremap <silent> <leader>gd :Gdiff<CR>
+        nnoremap <silent> <leader>gc :Gcommit<CR>
+        nnoremap <silent> <leader>gb :Gblame<CR>
+        nnoremap <silent> <leader>gl :Glog<CR>
+        nnoremap <silent> <leader>gp :Git push<CR>
+        nnoremap <silent> <leader>gr :Gread<CR>
+        nnoremap <silent> <leader>gw :Gwrite<CR>
+        nnoremap <silent> <leader>ge :Gedit<CR>
+        " Mnemonic _i_nteractive
+        nnoremap <silent> <leader>gi :Git add -p %<CR>
+        nnoremap <silent> <leader>gg :SignifyToggle<CR>
+    "}
+
+"javascript
+"
+let javascript_enable_domhtmlcss=1
+let g:user_emmet_leader_key='<C-Z>'
+
